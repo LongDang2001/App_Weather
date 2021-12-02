@@ -12,12 +12,31 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
-// 
+    // 785da7dc006dda8f97cd5e89504ccb4c key weather app;
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let windowScene = (scene as? UIWindowScene) else { return }
+        let window = UIWindow(windowScene: windowScene)
+        
+        let homeVC = HomeViewController()
+        homeVC.tabBarItem = UITabBarItem(tabBarSystemItem: .featured, tag: 0)
+        homeVC.tabBarItem.imageInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        
+        let searchVC = SearchViewController()
+        searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+        searchVC.tabBarItem.imageInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        
+        let listWeatherVC = ListWeatherViewController()
+        listWeatherVC.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 2)
+        listWeatherVC.tabBarItem.imageInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
+        
+        let tabbarController = UITabBarController()
+        tabbarController.tabBar.barTintColor = UIColor.myBlueTabbar
+        tabbarController.tabBar.tintColor = UIColor.white
+        tabbarController.viewControllers = [homeVC, searchVC, listWeatherVC]
+        
+        self.window = window
+        window.rootViewController = tabbarController
+        window.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
