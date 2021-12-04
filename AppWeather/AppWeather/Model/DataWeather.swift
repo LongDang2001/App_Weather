@@ -7,20 +7,63 @@
 //
 
 import Foundation
+
+// MARK: - Welcome
 struct DataWeather: Codable {
-    let coord: Coord
-    let weather: [Weather]
-    let base: String
-    let main: Main
-    let visibility: Int
-    let wind: Wind
-    let clouds: Clouds
-    let dt: Int
-    let sys: Sys
-    let timezone, id: Int
-    let name: String
-    let cod: Int
+    let lat, lon: Double
+    let timezone: String
+    let timezoneOffset: Int
+    let current: Current
+    let hourly: [Current]
+
+    enum CodingKeys: String, CodingKey {
+        case lat, lon, timezone
+        case timezoneOffset = "timezone_offset"
+        case current, hourly
+    }
 }
+
+// MARK: - Current
+struct Current: Codable {
+    let dt: Int
+    let sunrise, sunset: Int?
+    let temp, feelsLike: Double
+    let pressure, humidity: Int
+    let dewPoint, uvi: Double
+    let clouds, visibility: Int
+    let windSpeed: Double
+    let windDeg: Int
+    let weather: [Weather]
+
+    enum CodingKeys: String, CodingKey {
+        case dt, sunrise, sunset, temp
+        case feelsLike = "feels_like"
+        case pressure, humidity
+        case dewPoint = "dew_point"
+        case uvi, clouds, visibility
+        case windSpeed = "wind_speed"
+        case windDeg = "wind_deg"
+        case weather
+    }
+}
+
+
+enum Description: String, Codable {
+    case brokenClouds = "broken clouds"
+    case clearSky = "clear sky"
+    case fewClouds = "few clouds"
+    case scatteredClouds = "scattered clouds"
+}
+
+enum Icon: String, Codable {
+    case the03D = "03d"
+    case the03N = "03n"
+    case the04D = "04d"
+    case the04N = "04n"
+}
+
+
+
 // MARK: - Clouds
 struct Clouds: Codable {
     let all: Int
@@ -44,12 +87,7 @@ struct Main: Codable {
         case grndLevel = "grnd_level"
     }
 }
-// MARK: - Sys
-struct Sys: Codable {
-    let type, id: Int
-    let country: String
-    let sunrise, sunset: Int
-}
+
 // MARK: - Weather
 struct Weather: Codable {
     let id: Int
@@ -61,9 +99,5 @@ struct Weather: Codable {
         case icon
     }
 }
-// MARK: - Wind
-struct Wind: Codable {
-    let speed: Double
-    let deg: Int
-    let gust: Double
-}
+
+

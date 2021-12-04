@@ -27,7 +27,7 @@ extension UIColor {
     
     static var myBlueTabbar = UIColor(rgb: 0xff557EAE)
     static var myGrayContent = UIColor(rgb: 0xff272F3A)
-    static var viewBackground = UIColor(rgb: 0x060D26)
-    static var viewCyanSelect = UIColor(rgb: 0xffA7B4E0)
+    static var myviewBackground = UIColor(rgb: 0x060D26)
+    static var myviewCyanSelect = UIColor(rgb: 0xffA7B4E0)
     
 }

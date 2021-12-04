@@ -10,15 +10,111 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var lbLocation: UILabel!
+    @IBOutlet weak var lbDate: UILabel!
+    @IBOutlet weak var imgWeather: UIImageView!
+    @IBOutlet weak var lbTemper: UILabel!
+    
+    @IBOutlet weak var lbTemp: UILabel!
+    @IBOutlet weak var lbHumidy: UILabel!
+    @IBOutlet weak var lbWind: UILabel!
+    @IBOutlet weak var btViewReport: UIButton!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
     var serverLocation = ServerWeather.shared
+    var serverWeatherFiveDay = ServerWeatherFiveDay.shared
+    var serverWeatherSevenDay = ServerWeatherSevenDay.shared
+    
+    var dataSevenDay: DataWeather?
+    
+     // trong màn home hiển thị ra thời tiết của bảy ngày sắp tới và thời tiết hiện tại:
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .yellow
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
-        serverLocation.requestDataServer(completion: { dataWeather in
-            print(dataWeather)
-        })
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notification:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
         
+      
+        collectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeCollectionCell")
+        
+        collectionView.alwaysBounceVertical = true
+        collectionView.backgroundColor = UIColor.myviewBackground
+        
+    }
+    
+    @objc func showSpinningWheel(notification: Notification) {
+        
+        if let dataWeather = notification.userInfo?["key"] as? DataWeather {
+            self.dataSevenDay = dataWeather
+            guard  let dataWeatherResuld = self.dataSevenDay else {
+                return
+            }
+            setUpComponent(dataWeathers: dataWeatherResuld)
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+    }
+    
+    
+    
+    func setUpComponent(dataWeathers: DataWeather) {
+        self.lbLocation.text = dataWeathers.timezone
+        let dateCurrent = DateCurrent().convertTimeLongToDate(timeLong: dataWeathers.current.dt)
+        self.lbDate.text = dateCurrent
+        let imageView = CheckImageWeather().checkImageWeather(temp: dataWeathers.current.temp - 273.5, humadily: dataWeathers.current.humidity, wind: Int(dataWeathers.current.windDeg))
+        self.imgWeather.image = imageView
+        self.lbTemper.text = String(Int(dataWeathers.current.temp - 273.5)) + "c"
+        self.lbTemp.text = String(Int(dataWeathers.current.temp - 273.5)) + "c"
+        self.lbHumidy.text = String(dataWeathers.current.humidity) + "%"
+        self.lbWind.text = String(dataWeathers.current.windSpeed) + "km/h"
+    }
+}
+
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {
+
+    // collection view hiển thị thời tiết trong một ngày. tính theo từng giờ:
+    // sang màn khác sẽ hiển thị danh sách thời tiết 7 ngày tiếp theo. Sang một màn khac sẽ hiển thị danh sách 5 ngày trước đây:
+
+    // xử lý hiển thị dữ liệu ra màn collectionView:
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return dataSevenDay?.hourly.count ?? 15
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeCollectionCell", for: indexPath) as! HomeCollectionViewCell
+        let dataCell = dataSevenDay?.hourly[indexPath.row]
+        cell.lbDate.text = TimeCurrent().converTimeLong(timeLong: dataCell?.dt ?? 0)
+        cell.lbTemp.text = String(Int((dataCell?.temp ?? 273) - 273.5)) + " C"
+        cell.imgWeather.image = CheckImageWeather().checkImageWeather(temp: dataCell?.temp ?? 0 , humadily: dataCell?.humidity ?? 0, wind: Int(dataCell?.windSpeed ?? 0))
+        return cell
+    }
+}
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.frame.width / 2, height: collectionView.frame.height - 20)
+        
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        print(indexPath.row)
+    }
+    
+    
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        
+        return CGFloat(50)
     }
     
     

@@ -7,9 +7,13 @@
 //
 
 import Foundation
+
 class ServerWeather {
+    
     // key: 785da7dc006dda8f97cd5e89504ccb4c
     // location: Hanoi
+    // lây giá trị hiện tại của thời tiết:
+    
     static let shared = ServerWeather()
     func requestDataServer(completion: @escaping (DataWeather) -> Void) {
         guard let urlString = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=Hanoi,%7Bstate%20code%7D&appid=785da7dc006dda8f97cd5e89504ccb4c") else {
@@ -24,7 +28,6 @@ class ServerWeather {
             do {
                 let dataResuld = try JSONDecoder().decode(DataWeather.self, from: data)
                 print(dataResuld)
-                print(dataResuld.clouds.all)
                 DispatchQueue.main.async {
                     completion(dataResuld)
                 }
@@ -35,4 +38,7 @@ class ServerWeather {
         task.resume()
     }
 }
+
+
+
 
