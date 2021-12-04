@@ -14,6 +14,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var lbDate: UILabel!
     @IBOutlet weak var imgWeather: UIImageView!
     @IBOutlet weak var lbTemper: UILabel!
+    @IBOutlet weak var lbDescription: UILabel!
     
     @IBOutlet weak var lbTemp: UILabel!
     @IBOutlet weak var lbHumidy: UILabel!
@@ -61,14 +62,15 @@ class HomeViewController: UIViewController {
     }
     
     
-    
+    // fix lại cáh hiển thi, Sửa đổi cách gọi image. Thêm label mô tả thời tiết nữa:
     func setUpComponent(dataWeathers: DataWeather) {
         self.lbLocation.text = dataWeathers.timezone
         let dateCurrent = DateCurrent().convertTimeLongToDate(timeLong: dataWeathers.current.dt)
         self.lbDate.text = dateCurrent
-        let imageView = CheckImageWeather().checkImageWeather(temp: dataWeathers.current.temp - 273.5, humadily: dataWeathers.current.humidity, wind: Int(dataWeathers.current.windDeg))
+        let imageView = CheckImageWeather().checkImageWeather(description: dataWeathers.current.weather[0].weatherDescription, timeLong: dataWeathers.current.dt)
         self.imgWeather.image = imageView
         self.lbTemper.text = String(Int(dataWeathers.current.temp - 273.5)) + "c"
+        self.lbDescription.text = dataWeathers.current.weather[0].weatherDescription
         self.lbTemp.text = String(Int(dataWeathers.current.temp - 273.5)) + "c"
         self.lbHumidy.text = String(dataWeathers.current.humidity) + "%"
         self.lbWind.text = String(dataWeathers.current.windSpeed) + "km/h"
@@ -93,7 +95,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         let dataCell = dataSevenDay?.hourly[indexPath.row]
         cell.lbDate.text = TimeCurrent().converTimeLong(timeLong: dataCell?.dt ?? 0)
         cell.lbTemp.text = String(Int((dataCell?.temp ?? 273) - 273.5)) + " C"
-        cell.imgWeather.image = CheckImageWeather().checkImageWeather(temp: dataCell?.temp ?? 0 , humadily: dataCell?.humidity ?? 0, wind: Int(dataCell?.windSpeed ?? 0))
+        cell.imgWeather.image = CheckImageWeather().checkImageWeather(description: (dataCell?.weather[0].weatherDescription ?? ""), timeLong: dataCell?.dt ?? 0)
         return cell
     }
 }

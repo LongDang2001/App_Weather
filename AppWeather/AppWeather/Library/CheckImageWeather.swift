@@ -12,48 +12,44 @@ import UIKit
 class CheckImageWeather {
     
     // lấy ra đc dữ liệu sau đó ass vào đây:
-    func checkImageWeather(temp: Double, humadily: Int, wind: Int) -> UIImage {
-        let hour = Calendar.current.component(.hour, from: Date())
-        
+    func checkImageWeather(description: String, timeLong: Int) -> UIImage {
+        // convert tu timelong sang so gio, tu do check den thoi gian:
+        //let hour = Calendar.current.component(.hour, from: Date())
+        var nameImg: String = ""
         var hourText: String = ""
-        var tempText: String = ""
-        var humadilyText: String = ""
-        var windText: String = ""
+        
+        
+        let timeLongDouble: Double = Double(timeLong)
+        let date = Date(timeIntervalSince1970: TimeInterval(timeLongDouble))
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeStyle = .short
+        dateFormatter.dateFormat = "HH"
+        print(dateFormatter.string(from: date))
+        var hour: Int = Int(dateFormatter.string(from: date)) ?? 0
         
         if (hour > 6 && hour < 18) {
-            hourText = "sang"
+           
         } else {
-            hourText = "toi"
-        }
-        // nhiet do
-        if (temp >= 32 ) {
-            tempText = "nong"
-        } else if (temp < 32 && temp > 10) {
-            tempText = "lanh"
-        } else if (temp <= 5) {
-            tempText = "qualanh"
+            hourText = "night"
         }
         
-        // do am:
-        if (humadily >= 60 && humadily < 80 ) {
-            humadilyText = "mua"
-        } else if (humadily < 60 ) {
-            humadilyText = "komua"
-        } else if ( humadily >= 90) {
-            humadilyText = "muato"
+        if (description == "overcast clouds" ) {
+            nameImg = "04n"
+        } else if (description == "clear sky") {
+            nameImg = "03n"
+        } else if (description == "few clouds" && description == "scattered clouds") {
+            nameImg = "04d"
+        } else if (description == "broken clouds") {
+            nameImg = "03d"
+        } else {
+            nameImg = "03n"
         }
         
-        // wind
-        if (wind < 38) {
-            windText = "gionho"
-        } else if (wind >= 38 && wind < 117) {
-            windText = "giotrungbinh"
-        } else if (wind > 117) {
-            windText = "giosieuto"
-        }
         
-        let nameImg: String = tempText + humadilyText + windText + hourText
-        let imgView = UIImage(named: nameImg) ?? UIImage(named: "nongmuanhogiotodem")
+        let imgResuld = nameImg + hourText
+        print(imgResuld)
+        
+        let imgView = UIImage(named: imgResuld) ?? UIImage(named: "03n")
         return imgView!
     }
 }
