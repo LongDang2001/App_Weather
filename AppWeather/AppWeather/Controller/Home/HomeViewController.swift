@@ -53,6 +53,7 @@ class HomeViewController: UIViewController {
                 return
             }
             setUpComponent(dataWeathers: dataWeatherResuld)
+            collectionView.reloadData()
         }
     }
     

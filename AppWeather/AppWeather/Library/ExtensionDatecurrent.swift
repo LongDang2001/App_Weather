@@ -17,7 +17,7 @@ class DateCurrent {
         dateFormatter.timeZone = .current
         dateFormatter.locale = .current
         dateFormatter.dateStyle = .short
-        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateFormatter.dateFormat = "dd"
         return dateFormatter.string(from: date)
     }
     
@@ -30,9 +30,34 @@ class DateCurrent {
       //dateFormatter.dateFormat = "EEEE MMM d yyyy"
         return dateFormatter.string(from: date)
     }
+    
+    func convertTimeLongToDateShort(timeLong: Int) -> String {
+        let timeLongDouble: Double = Double(timeLong)
+        let date = Date(timeIntervalSince1970: TimeInterval(timeLongDouble))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "dd"
+        return dateFormatter.string(from: date)
+    }
+    
+    func convertTimeLongToDateShortEEEE(timeLong: Int) -> String {
+        let timeLongDouble: Double = Double(timeLong)
+        let date = Date(timeIntervalSince1970: TimeInterval(timeLongDouble))
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.dateFormat = "EEEE"
+        return dateFormatter.string(from: date)
+    }
 }
 
 class TimeCurrent {
+    
+    func timeInterver() -> Int {
+        let timeInterverData = Date().timeIntervalSince1970
+        let timeInterver: Int = Int(timeInterverData)
+        return timeInterver
+    }
+    
     func timeCurrent() -> String {
         let date = Date()
         let timeFormatter = DateFormatter()
@@ -40,6 +65,8 @@ class TimeCurrent {
         timeFormatter.timeZone = .current
         timeFormatter.locale = .current
         timeFormatter.dateFormat = "HH:mm"
+        
+        
         return timeFormatter.string(from: date)
     }
     
