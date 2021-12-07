@@ -32,7 +32,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarDelegate, UITab
         let listWeatherVC = ListWeatherViewController()
         listWeatherVC.tabBarItem = UITabBarItem(tabBarSystemItem: .mostViewed, tag: 3)
         listWeatherVC.tabBarItem.imageInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
-        
         let tabbarController = UITabBarController()
         tabbarController.delegate = self
         tabbarController.tabBar.barTintColor = UIColor(rgb: 0xff101A39)
@@ -41,56 +40,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarDelegate, UITab
         tabbarController.tabBar.clipsToBounds = true
         tabbarController.viewControllers = [homeVC, searchVC, listWeatherVC]
         
-        
-        
-        
         serverWeatherSevenDay.requestSevenDay(completion: { dataWeather in
             self.dataSevenDay = dataWeather
             let imageDataDict:[String: DataWeather] = ["key": dataWeather]
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: imageDataDict)
             homeVC.dataSevenDay = dataWeather
             listWeatherVC.dataSevenDay = dataWeather
-            // khoi tao gia tri lan dau tien cho no
             
         })
         // call data fiveday:
         serverWeatherFiveDay.requestFiveDay(completion: { dataWeatherFive in
             self.dataFiveDay = dataWeatherFive
-            let dataDict:[String: DataWeather] = ["keyFive": dataWeatherFive]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationNameFive"), object: nil, userInfo: dataDict)
-            
             listWeatherVC.dataFiveDay = dataWeatherFive
-            //listWeatherVC.dataSevenDay = self.dataSevenDay
         }, setTimeLong: TimeCurrent().timeInterver() - Int(2 * 86400) )
-        
-        
-        
         self.window = window
         window.rootViewController = tabbarController
         window.makeKeyAndVisible()
     }
     
-    
-    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-        print(viewController)
-        // check bam vao tabbar nào để làm sấng màn khác: , dung notification cũng có thể chuyển sang các màn, nên cũng không cần phải load vào hàm như này:
-        if let homView = viewController as? HomeViewController {
-            //homView.dataSevenDay = dataSevenDay
-
-        } else if let searchView = viewController as? SearchViewController {
-            print("s")
-
-        } else if let lishView = viewController as? ListWeatherViewController {
-//            lishView.dataSevenDay = dataSevenDay
-//            lishView.dataFiveDay = dataFiveDay
-
-
-        }
-    }
-    
-    
-   
-
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.

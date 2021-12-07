@@ -10,9 +10,9 @@ import Foundation
 
 // MARK: - Welcome
 struct DataWeather: Codable {
-    let lat, lon: Double
-    let timezone: String
-    let timezoneOffset: Int
+    let lat, lon: Double?
+    let timezone: String?
+    let timezoneOffset: Int?
     let current: Current
     let hourly: [Current]
 
@@ -33,7 +33,7 @@ struct DataWeatherOneCity: Codable {
     let wind: Wind
     let clouds: Clouds
     let dt: Int
-    let sys: Sys
+    let sys: Sys?
     let timezone, id: Int
     let name: String
     let cod: Int
@@ -102,12 +102,12 @@ struct Clouds: Codable {
 }
 // MARK: - Coord
 struct Coord: Codable {
-    let lon, lat: Double
+    let lon, lat: Double?
 }
 // MARK: - Main
 struct Main: Codable {
     let temp, feelsLike, tempMin, tempMax: Double
-    let pressure, humidity, seaLevel, grndLevel: Int
+    let pressure, humidity, seaLevel, grndLevel: Int?
 
     enum CodingKeys: String, CodingKey {
         case temp

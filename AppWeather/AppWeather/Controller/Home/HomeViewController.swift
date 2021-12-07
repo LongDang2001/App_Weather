@@ -36,7 +36,7 @@ class HomeViewController: UIViewController {
         collectionView.delegate = self
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notification:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
-        
+
       
         collectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeCollectionCell")
         
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
     }
     
     @objc func showSpinningWheel(notification: Notification) {
-        
+
         if let dataWeather = notification.userInfo?["key"] as? DataWeather {
             self.dataSevenDay = dataWeather
             guard  let dataWeatherResuld = self.dataSevenDay else {
@@ -76,6 +76,10 @@ class HomeViewController: UIViewController {
         self.lbHumidy.text = String(dataWeathers.current.humidity) + "%"
         self.lbWind.text = String(dataWeathers.current.windSpeed) + "km/h"
     }
+    
+    @IBAction func btActionViewReport(_ sender: Any) {
+    }
+    
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate {

@@ -36,17 +36,16 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
     
     @IBAction func btActionSearch(_ sender: Any) {
         
-        let checkIsOk = requestWeather.requestDataServer(completion: { dataWeather in
+        requestWeather.requestDataServer(completion: { dataWeather in
             print(dataWeather)
             self.lbLocation.text = dataWeather.name
             self.lbDate.text = DateCurrent().convertTimeLongToDate(timeLong: dataWeather.dt)
             self.imgWeather.image = CheckImageWeather().checkImageWeather(description: dataWeather.weather[0].weatherDescription, timeLong: dataWeather.dt)
-            self.lbTemp.text = String(Int(dataWeather.main.temp - 273.5))
+            self.lbTemp.text = String(Int(dataWeather.main.temp - 273.5)) + " C"
             self.lbDescription.text = dataWeather.weather[0].weatherDescription
-            self.lbTempp.text = String(Int(dataWeather.main.temp - 273.5))
-            self.lbHumidy.text = String(dataWeather.main.humidity)
-            self.lbWind.text = String(dataWeather.wind.speed)
-            
+            self.lbTempp.text = String(Int(dataWeather.main.temp - 273.5)) + "C "
+            self.lbHumidy.text = String(dataWeather.main.humidity ?? 0) + "%"
+            self.lbWind.text = String(dataWeather.wind.speed) + "km/h"
             
         }, completionError: { checkIsOk in
             if (checkIsOk == false) {
@@ -65,6 +64,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
+            self.textSearchChangle = ""
         }, nameCity: textSearchChangle)
         
         
@@ -89,18 +89,14 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
         txtSearch.font = UIFont(name: "lato", size: 30)
         txtSearch.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 15, height:txtSearch.frame.height))
         txtSearch.leftViewMode = .always
-        
-        
-        
-        
-        
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        let searchText  = txtSearch.text! + string
         textSearchChangle = txtSearch.text! + string
         print(textSearchChangle)
         return true
     }
+    
+    
 }
 

@@ -148,6 +148,9 @@
                                     <state key="normal" title="View Report">
                                         <color key="titleColor" systemColor="systemGrayColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     </state>
+                                    <connections>
+                                        <action selector="btActionViewReport:" destination="-1" eventType="touchUpInside" id="weK-FR-mn9"/>
+                                    </connections>
                                 </button>
                             </subviews>
                         </stackView>
