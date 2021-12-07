@@ -22,11 +22,11 @@ class ListWeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Handle gọi NOtification trước để lấy data về:
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notificatin:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
-        
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheelFive(notificatin:)), name: NSNotification.Name(rawValue: "notificationNameFive"), object: nil)
+//        // Handle gọi NOtification trước để lấy data về:
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notificatin:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
+//
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheelFive(notificatin:)), name: NSNotification.Name(rawValue: "notificationNameFive"), object: nil)
         
         tableView.backgroundColor = UIColor.myviewBackground
         tableView.register(UINib(nibName: "ListWeatherTableViewCell", bundle: nil), forCellReuseIdentifier: "ListWeatherTableViewCellId")
@@ -42,13 +42,13 @@ class ListWeatherViewController: UIViewController {
     }
     
     
-    @objc func showSpinningWheel(notificatin:Notification) {
-        print("bbbbbbb")
-    }
-    
-    @objc func showSpinningWheelFive(notificatin:Notification) {
-        print("kkkk")
-    }
+//    @objc func showSpinningWheel(notificatin:Notification) {
+//        print("bbbbbbb")
+//    }
+//
+//    @objc func showSpinningWheelFive(notificatin:Notification) {
+//        print("kkkk")
+//    }
     
     func checkDateDiferent(dataSevendays: DataWeather, dataFivedays: DataWeather) {
         

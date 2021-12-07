@@ -23,6 +23,38 @@ struct DataWeather: Codable {
     }
 }
 
+// MARK: - Welcome
+struct DataWeatherOneCity: Codable {
+    let coord: Coord
+    let weather: [Weather]
+    let base: String
+    let main: Main
+    let visibility: Int
+    let wind: Wind
+    let clouds: Clouds
+    let dt: Int
+    let sys: Sys
+    let timezone, id: Int
+    let name: String
+    let cod: Int
+}
+
+
+// MARK: - Sys
+struct Sys: Codable {
+    let type, id: Int
+    let country: String
+    let sunrise, sunset: Int
+}
+
+
+// MARK: - Wind
+struct Wind: Codable {
+    let speed: Double
+    let deg: Int
+    let gust: Double
+}
+
 // MARK: - Current
 struct Current: Codable {
     let dt: Int
