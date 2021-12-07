@@ -32,7 +32,6 @@ class ServerWeatherSevenDay {
             guard let data = data else { return }
             do {
                 let dataResuld = try JSONDecoder().decode(DataWeather.self, from: data)
-                print(dataResuld)
                 DispatchQueue.main.async {
                     completion(dataResuld)
                 }

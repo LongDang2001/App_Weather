@@ -26,6 +26,10 @@
 		845695BF275853630054B109 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 845695BD275853630054B109 /* LaunchScreen.storyboard */; };
 		845695D0275859F50054B109 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845695CE275859F50054B109 /* HomeViewController.swift */; };
 		845695D1275859F50054B109 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845695CF275859F50054B109 /* HomeViewController.xib */; };
+		845ADA7D275F249700FFE50F /* ViewReportController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845ADA7B275F249700FFE50F /* ViewReportController.swift */; };
+		845ADA7E275F249700FFE50F /* ViewReportController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845ADA7C275F249700FFE50F /* ViewReportController.xib */; };
+		845ADA86275F26E400FFE50F /* TableViewReportCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845ADA84275F26E400FFE50F /* TableViewReportCell.swift */; };
+		845ADA87275F26E400FFE50F /* TableViewReportCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 845ADA85275F26E400FFE50F /* TableViewReportCell.xib */; };
 		846839BA2758B01100DAC895 /* ExtensionDatecurrent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846839B92758B01100DAC895 /* ExtensionDatecurrent.swift */; };
 		846839BC2758B64700DAC895 /* CheckImageWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846839BB2758B64700DAC895 /* CheckImageWeather.swift */; };
 		846839BF2758D2BB00DAC895 /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846839BD2758D2BB00DAC895 /* HomeCollectionViewCell.swift */; };
@@ -54,6 +58,10 @@
 		845695C0275853630054B109 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		845695CE275859F50054B109 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		845695CF275859F50054B109 /* HomeViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		845ADA7B275F249700FFE50F /* ViewReportController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewReportController.swift; sourceTree = "<group>"; };
+		845ADA7C275F249700FFE50F /* ViewReportController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ViewReportController.xib; sourceTree = "<group>"; };
+		845ADA84275F26E400FFE50F /* TableViewReportCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewReportCell.swift; sourceTree = "<group>"; };
+		845ADA85275F26E400FFE50F /* TableViewReportCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewReportCell.xib; sourceTree = "<group>"; };
 		846839B92758B01100DAC895 /* ExtensionDatecurrent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDatecurrent.swift; sourceTree = "<group>"; };
 		846839BB2758B64700DAC895 /* CheckImageWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckImageWeather.swift; sourceTree = "<group>"; };
 		846839BD2758D2BB00DAC895 /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -163,6 +171,7 @@
 		845695D227585A040054B109 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				845ADA7F275F26A400FFE50F /* ViewReport */,
 				8443F8772759DDCA00654C1E /* HomeCollectionView */,
 				845695CE275859F50054B109 /* HomeViewController.swift */,
 				845695CF275859F50054B109 /* HomeViewController.xib */,
@@ -188,6 +197,17 @@
 				84520DC4275B201800F412A2 /* ListWeatherTableViewCell.xib */,
 			);
 			path = ListWeather;
+			sourceTree = "<group>";
+		};
+		845ADA7F275F26A400FFE50F /* ViewReport */ = {
+			isa = PBXGroup;
+			children = (
+				845ADA7B275F249700FFE50F /* ViewReportController.swift */,
+				845ADA7C275F249700FFE50F /* ViewReportController.xib */,
+				845ADA84275F26E400FFE50F /* TableViewReportCell.swift */,
+				845ADA85275F26E400FFE50F /* TableViewReportCell.xib */,
+			);
+			path = ViewReport;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -251,10 +271,12 @@
 				845695BF275853630054B109 /* LaunchScreen.storyboard in Resources */,
 				845695BC275853630054B109 /* Assets.xcassets in Resources */,
 				841BEFCC27586E17003FDB9A /* ListWeatherViewController.xib in Resources */,
+				845ADA87275F26E400FFE50F /* TableViewReportCell.xib in Resources */,
 				841BEFC827586DF9003FDB9A /* SearchViewController.xib in Resources */,
 				84520DC6275B201800F412A2 /* ListWeatherTableViewCell.xib in Resources */,
 				846839C02758D2BB00DAC895 /* HomeCollectionViewCell.xib in Resources */,
 				845695BA275853620054B109 /* Main.storyboard in Resources */,
+				845ADA7E275F249700FFE50F /* ViewReportController.xib in Resources */,
 				845695D1275859F50054B109 /* HomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +288,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845ADA7D275F249700FFE50F /* ViewReportController.swift in Sources */,
 				8443F8722759C49800654C1E /* ServerWeatherSevenDay.swift in Sources */,
 				845695D0275859F50054B109 /* HomeViewController.swift in Sources */,
 				841BEFC727586DF9003FDB9A /* SearchViewController.swift in Sources */,
@@ -278,6 +301,7 @@
 				846839BA2758B01100DAC895 /* ExtensionDatecurrent.swift in Sources */,
 				841BEFD027587E57003FDB9A /* DataWeather.swift in Sources */,
 				841BEFCB27586E17003FDB9A /* ListWeatherViewController.swift in Sources */,
+				845ADA86275F26E400FFE50F /* TableViewReportCell.swift in Sources */,
 				845695B5275853620054B109 /* SceneDelegate.swift in Sources */,
 				841BEFD227587E98003FDB9A /* ServerWeather.swift in Sources */,
 				846839BF2758D2BB00DAC895 /* HomeCollectionViewCell.swift in Sources */,

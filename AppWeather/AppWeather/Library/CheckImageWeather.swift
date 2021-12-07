@@ -18,13 +18,11 @@ class CheckImageWeather {
         var nameImg: String = ""
         var hourText: String = ""
         
-        
         let timeLongDouble: Double = Double(timeLong)
         let date = Date(timeIntervalSince1970: TimeInterval(timeLongDouble))
         let dateFormatter = DateFormatter()
         dateFormatter.timeStyle = .short
         dateFormatter.dateFormat = "HH"
-        print(dateFormatter.string(from: date))
         var hour: Int = Int(dateFormatter.string(from: date)) ?? 0
         
         if (hour > 6 && hour < 18) {
@@ -32,7 +30,6 @@ class CheckImageWeather {
         } else {
             hourText = "night"
         }
-        
         if (description == "overcast clouds" ) {
             nameImg = "04n"
         } else if (description == "clear sky") {
@@ -45,10 +42,7 @@ class CheckImageWeather {
             nameImg = "03n"
         }
         
-        
         let imgResuld = nameImg + hourText
-        print(imgResuld)
-        
         let imgView = UIImage(named: imgResuld) ?? UIImage(named: "03n")
         return imgView!
     }

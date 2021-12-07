@@ -15,29 +15,23 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var imgWeather: UIImageView!
     @IBOutlet weak var lbTemper: UILabel!
     @IBOutlet weak var lbDescription: UILabel!
-    
     @IBOutlet weak var lbTemp: UILabel!
     @IBOutlet weak var lbHumidy: UILabel!
     @IBOutlet weak var lbWind: UILabel!
     @IBOutlet weak var btViewReport: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     var serverLocation = ServerWeather.shared
     var serverWeatherFiveDay = ServerWeatherFiveDay.shared
     var serverWeatherSevenDay = ServerWeatherSevenDay.shared
-    
     var dataSevenDay: DataWeather?
-    
      // trong màn home hiển thị ra thời tiết của bảy ngày sắp tới và thời tiết hiện tại:
     
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notification:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
-
-      
+        
         collectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeCollectionCell")
         
         collectionView.alwaysBounceVertical = true
@@ -77,7 +71,13 @@ class HomeViewController: UIViewController {
         self.lbWind.text = String(dataWeathers.current.windSpeed) + "km/h"
     }
     
+    // MARK: VIEW Report
     @IBAction func btActionViewReport(_ sender: Any) {
+        let viewReport = ViewReportController()
+        viewReport.modalPresentationStyle = .fullScreen
+        viewReport.modalTransitionStyle = .coverVertical
+        viewReport.dataWeather = dataSevenDay
+        self.present(viewReport, animated: true, completion: nil)
     }
     
 }
@@ -113,14 +113,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
-        print(indexPath.row)
     }
     
     
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        
         return CGFloat(50)
     }
     
