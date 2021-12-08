@@ -199,7 +199,7 @@
 		845695D427585A7B0054B109 /* ListWeather */ = {
 			isa = PBXGroup;
 			children = (
-				84CC7968276091EB0029EE81 /* DetailMessenger */,
+				84CC7968276091EB0029EE81 /* DetaildWeatherList */,
 				841BEFC927586E17003FDB9A /* ListWeatherViewController.swift */,
 				841BEFCA27586E17003FDB9A /* ListWeatherViewController.xib */,
 				84520DC3275B201800F412A2 /* ListWeatherTableViewCell.swift */,
@@ -219,7 +219,7 @@
 			path = ViewReport;
 			sourceTree = "<group>";
 		};
-		84CC7968276091EB0029EE81 /* DetailMessenger */ = {
+		84CC7968276091EB0029EE81 /* DetaildWeatherList */ = {
 			isa = PBXGroup;
 			children = (
 				84CC79692760920C0029EE81 /* DetailListViewController.swift */,
@@ -227,7 +227,7 @@
 				84CC796D2760950D0029EE81 /* DetailListTableViewCell.swift */,
 				84CC796E2760950D0029EE81 /* DetailListTableViewCell.xib */,
 			);
-			path = DetailMessenger;
+			path = DetaildWeatherList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
