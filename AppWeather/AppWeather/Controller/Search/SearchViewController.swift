@@ -13,7 +13,6 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
     // làm màn này, Duyệt theo tên, Nếu trả về giá trị thì hiển thị:
     @IBOutlet weak var btSearch: UIButton!
     @IBOutlet weak var txtSearch: UITextField!
-    
     @IBOutlet weak var lbLocation: UILabel!
     @IBOutlet weak var lbDate: UILabel!
     @IBOutlet weak var imgWeather: UIImageView!
@@ -22,6 +21,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
     @IBOutlet weak var lbTempp: UILabel!
     @IBOutlet weak var lbHumidy: UILabel!
     @IBOutlet weak var lbWind: UILabel!
+    @IBOutlet weak var viewContents: UIView!
     
     
     @IBOutlet weak var btCancle: UIButton!
@@ -32,12 +32,19 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
         super.viewDidLoad()
         loadDataToSearch()
         txtSearch.delegate = self
+        if (dataWeatherSearch == nil) {
+            viewContents.isHidden = true
+        }
     }
     
     @IBAction func btActionSearch(_ sender: Any) {
         
         requestWeather.requestDataServer(completion: { dataWeather in
             print(dataWeather)
+            self.dataWeatherSearch = dataWeather
+            if (self.dataWeatherSearch != nil ) {
+                self.viewContents.isHidden = false
+            }
             self.lbLocation.text = dataWeather.name
             self.lbDate.text = DateCurrent().convertTimeLongToDate(timeLong: dataWeather.dt)
             self.imgWeather.image = CheckImageWeather().checkImageWeather(description: dataWeather.weather[0].weatherDescription, timeLong: dataWeather.dt)
@@ -72,16 +79,14 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
     }
     
     @IBAction func btActionCancle(_ sender: Any) {
-        
         // vẫn luu lại giá trị đã seach trước đó:
         txtSearch.text = ""
         self.dataWeatherSearch = nil
-       
-        
     }
     
     
     func loadDataToSearch() {
+        view.backgroundColor = UIColor.myviewBackground
         txtSearch.backgroundColor = UIColor.myGrayContent
         txtSearch.textColor = UIColor.white
         txtSearch.layer.cornerRadius = 20

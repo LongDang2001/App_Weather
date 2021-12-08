@@ -39,8 +39,11 @@ class ListWeatherViewController: UIViewController {
         
         for item in dataSevendays.hourly {
             let keyDate = DateCurrent().convertTimeLongToDateShort(timeLong: item.dt)
-            if let _ = dataSevenDayDict[keyDate] {
-                // ko lấy giá trị khi có giá trị cùng một ngày.
+            if var valueSeven = dataSevenDayDict[keyDate] {
+                // lấy giá trị của diction để sau truyền giá trị qua màn detail:
+                valueSeven.append(item)
+                dataSevenDayDict[keyDate] = valueSeven
+                
             } else {
                 dataResuldSeven.append(item)
                 dataSevenDayDict[keyDate] = [item]
@@ -48,19 +51,17 @@ class ListWeatherViewController: UIViewController {
         }
         for items in dataFivedays.hourly {
             let keyDate = DateCurrent().convertTimeLongToDateShort(timeLong: items.dt)
-            if let _ = dataFiveDayDict[keyDate] {
-                // ko lấy giá trị khi có giá trị cùng một ngày.
+            if var valueFive = dataFiveDayDict[keyDate] {
+                valueFive.append(items)
+                dataFiveDayDict[keyDate] = valueFive
             } else {
                 dataResuldFive.append(items)
                 dataFiveDayDict[keyDate] = [items]
             }
         }
-//        print(dataSevenDayDict)
-//        print(dataResuldSeven)
-//        print(dataResuldFive)
-          
+        print(dataSevenDayDict)
+        print(dataFiveDayDict)
     }
-   
 }
 
 // MARK: TableView
@@ -102,10 +103,7 @@ extension ListWeatherViewController: UITableViewDataSource, UITableViewDelegate 
              cell.lbTemp.text = String(Int(dataFiveCell.temp - 275.5)) + " C"
             // hien thi image: 
             cell.imgWeather.image = CheckImageWeather().checkImageWeather(description: dataFiveCell.weather[0].icon, timeLong: dataFiveCell.dt)
-            
-            
         }
-       
         return cell
     }
     
@@ -133,6 +131,26 @@ extension ListWeatherViewController: UITableViewDataSource, UITableViewDelegate 
         lbText.font = UIFont(name: "lato", size: 24)
         viewHeader.addSubview(lbText)
         return viewHeader
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        var detailListView = DetailListViewController()
+        detailListView.modalPresentationStyle = .fullScreen
+        detailListView.modalTransitionStyle = .coverVertical
+        
+        
+        
+        if(indexPath.section == 0) {
+            // truyền lại giá trị của từng giá trị của dữ liệu ngày đó:  hiển thị sang bên mảng detail:
+            detailListView.dataArrCurrent = dataSevenDayDict[DateCurrent().convertTimeLongToDateShort(timeLong: dataResuldSeven[indexPath.row].dt)]
+            detailListView.nameCityLocation = dataSevenDay?.timezone
+            
+        } else if (indexPath.section == 1) {
+            detailListView.dataArrCurrent = dataFiveDayDict[DateCurrent().convertTimeLongToDateShort(timeLong: dataResuldFive[indexPath.row].dt)]
+            detailListView.nameCityLocation = dataFiveDay?.timezone
+        }
+        
+        self.present(detailListView, animated: true, completion: nil)
     }
     
 }
