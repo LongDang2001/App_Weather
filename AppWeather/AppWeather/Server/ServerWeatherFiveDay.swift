@@ -11,8 +11,8 @@ import Foundation
 class ServerWeatherFiveDay {
     // lấy dữ liệu của 5 ngày trươc đó:
     // dt time là thời gian cách đây 5 ngày trướcL
-    //
-    static let shared = ServerWeatherFiveDay()
+    //var dataWeatherFiveDay: DataWeather?
+    
     func requestFiveDay(completion: @escaping (DataWeather) -> Void, setTimeLong: Int) {
         guard let urlString = URL(string: "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=21.1&lon=105.8342&dt=\(setTimeLong)&appid=785da7dc006dda8f97cd5e89504ccb4c") else {
             return
@@ -26,8 +26,11 @@ class ServerWeatherFiveDay {
             do {
                 let dataResuld = try JSONDecoder().decode(DataWeather.self, from: data)
                 print(dataResuld)
+                //self.dataWeatherFiveDay = dataResuld
+                
                 //print(dataResuld.clouds.all)
                 DispatchQueue.main.async {
+                    
                     completion(dataResuld)
                 }
             } catch {

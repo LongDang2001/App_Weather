@@ -11,10 +11,7 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarDelegate, UITabBarControllerDelegate {
 
     var window: UIWindow?
-    var serverWeatherSevenDay = ServerWeatherSevenDay.shared
-    var serverWeatherFiveDay = ServerWeatherFiveDay.shared
-    var dataSevenDay: DataWeather?
-    var dataFiveDay: DataWeather?
+    var serverSetup = ServerSetup.shared
     
     // 785da7dc006dda8f97cd5e89504ccb4c key weather app;
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -40,19 +37,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarDelegate, UITab
         tabbarController.tabBar.clipsToBounds = true
         tabbarController.viewControllers = [homeVC, searchVC, listWeatherVC]
         
-        serverWeatherSevenDay.requestSevenDay(completion: { dataWeather in
-            self.dataSevenDay = dataWeather
-            let imageDataDict:[String: DataWeather] = ["key": dataWeather]
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "notificationName"), object: nil, userInfo: imageDataDict)
+        // call data waather: gọi callBack để màn này sử lý chức năng của việc gán dataWether.
+        serverSetup.requestSevenDays(completion: { dataWeather in
+            // truyền dữ liệu về màn ListWeather.
             homeVC.dataSevenDay = dataWeather
             listWeatherVC.dataSevenDay = dataWeather
-            
         })
-        // call data fiveday:
-        serverWeatherFiveDay.requestFiveDay(completion: { dataWeatherFive in
-            self.dataFiveDay = dataWeatherFive
-            listWeatherVC.dataFiveDay = dataWeatherFive
-        }, setTimeLong: TimeCurrent().timeInterver() - Int(2 * 86400) )
+        
         self.window = window
         window.rootViewController = tabbarController
         window.makeKeyAndVisible()

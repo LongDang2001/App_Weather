@@ -21,8 +21,8 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var btViewReport: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
     var serverLocation = ServerWeather.shared
-    var serverWeatherFiveDay = ServerWeatherFiveDay.shared
-    var serverWeatherSevenDay = ServerWeatherSevenDay.shared
+    var serverWeatherFiveDay = ServerWeatherFiveDay()
+    var serverWeatherSevenDay = ServerWeatherSevenDay()
     var dataSevenDay: DataWeather?
      // trong màn home hiển thị ra thời tiết của bảy ngày sắp tới và thời tiết hiện tại:
     
@@ -30,8 +30,8 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         collectionView.dataSource = self
         collectionView.delegate = self
-        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notification:)), name: NSNotification.Name(rawValue: "notificationName"), object: nil)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showSpinningWheel(notification:)), name: NSNotification.Name(rawValue: NotificationCenters.shared.notificationHome), object: nil)
         collectionView.register(UINib(nibName: "HomeCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "HomeCollectionCell")
         
         collectionView.alwaysBounceVertical = true
@@ -51,6 +51,7 @@ class HomeViewController: UIViewController {
         }
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
@@ -58,7 +59,7 @@ class HomeViewController: UIViewController {
     
     
     // fix lại cáh hiển thi, Sửa đổi cách gọi image. Thêm label mô tả thời tiết nữa:
-    func setUpComponent(dataWeathers: DataWeather) {
+    private func setUpComponent(dataWeathers: DataWeather) {
         self.lbLocation.text = dataWeathers.timezone
         let dateCurrent = DateCurrent().convertTimeLongToDate(timeLong: dataWeathers.current.dt)
         self.lbDate.text = dateCurrent

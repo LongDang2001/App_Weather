@@ -18,22 +18,30 @@ class ListWeatherViewController: UIViewController {
     var dataFiveDayDict: [String: [Current]] = [:]
     var dataResuldFive: [Current] = []
     var dataResuldSeven: [Current] = []
+    var serverWeatherFiveDay = ServerWeatherFiveDay()
+    
     @IBOutlet weak var tableView: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //print(ServerWeatherFiveDay.shared.dataWeatherFiveDay)
         tableView.backgroundColor = UIColor.myviewBackground
         tableView.register(UINib(nibName: "ListWeatherTableViewCell", bundle: nil), forCellReuseIdentifier: "ListWeatherTableViewCellId")
         tableView.dataSource = self
         tableView.delegate = self
-        guard let dataFivedays = dataFiveDay else {  
-            return
-        }
-        guard let dataSevenDays = dataSevenDay else {
-            return
-        }
-        checkDateDiferent(dataSevendays: dataSevenDays, dataFivedays: dataFivedays)
+        // call data fiveday: gọi trong màn listWeather trong viewDidLoad:
+        serverWeatherFiveDay.requestFiveDay(completion: { dataWeatherFive in
+            self.dataFiveDay = dataWeatherFive
+            guard let dataFivedays = self.dataFiveDay else {
+                return
+            }
+            guard let dataSevenDays = self.dataSevenDay else {
+                return
+            }
+            self.checkDateDiferent(dataSevendays: dataSevenDays, dataFivedays: dataFivedays)
+            self.tableView.reloadData()
+        }, setTimeLong: TimeCurrent().timeInterver() - Int(2 * 86400))
     }
+    
     
     func checkDateDiferent(dataSevendays: DataWeather, dataFivedays: DataWeather) {
         
@@ -59,8 +67,6 @@ class ListWeatherViewController: UIViewController {
                 dataFiveDayDict[keyDate] = [items]
             }
         }
-        print(dataSevenDayDict)
-        print(dataFiveDayDict)
     }
 }
 
@@ -72,9 +78,11 @@ extension ListWeatherViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == 0) {
+            print(dataResuldSeven.count)
             return dataResuldSeven.count
             
         }
+        print(dataResuldFive.count)
         return dataResuldFive.count
     }
     
@@ -137,9 +145,6 @@ extension ListWeatherViewController: UITableViewDataSource, UITableViewDelegate 
         var detailListView = DetailListViewController()
         detailListView.modalPresentationStyle = .fullScreen
         detailListView.modalTransitionStyle = .coverVertical
-        
-        
-        
         if(indexPath.section == 0) {
             // truyền lại giá trị của từng giá trị của dữ liệu ngày đó:  hiển thị sang bên mảng detail:
             detailListView.dataArrCurrent = dataSevenDayDict[DateCurrent().convertTimeLongToDateShort(timeLong: dataResuldSeven[indexPath.row].dt)]

@@ -19,7 +19,7 @@ class ServerWeatherSevenDay {
     // lấy dữ liệu theo từng giờ trong một ngày, và link này cũng lấy ra các ngày trong tương lai:  Cần phải fix Lại cách lấy đến ngày:
     // https://api.openweathermap.org/data/2.5/onecall?lat=21.1&lon=105&exclude=hourly,daily&appid=785da7dc006dda8f97cd5e89504ccb4c
     
-    static let shared = ServerWeatherSevenDay()
+    //static let shared = ServerWeatherSevenDay()
     func requestSevenDay(completion: @escaping (DataWeather) -> Void) {
         guard let urlString = URL(string: "https://api.openweathermap.org/data/2.5/onecall?lat=21.1&lon=105&exclude=daily&appid=785da7dc006dda8f97cd5e89504ccb4c") else {
             return
