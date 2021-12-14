@@ -25,6 +25,7 @@ class HomeViewController: UIViewController {
     var serverWeatherSevenDay = ServerWeatherSevenDay()
     var dataSevenDay: DataWeather?
      // trong màn home hiển thị ra thời tiết của bảy ngày sắp tới và thời tiết hiện tại:
+    @IBOutlet weak var stackViewLocal: UIStackView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,9 +37,23 @@ class HomeViewController: UIViewController {
         
         collectionView.alwaysBounceVertical = true
         collectionView.backgroundColor = UIColor.myviewBackground
-        
+        stackView()
     }
     
+    private func stackView() {
+        print(view.frame.height / 35)
+        stackViewLocal.spacing = CGFloat(view.frame.height / 35)
+        stackViewLocal.alignment = .center
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        print(view.frame.height / 8)
+        if (view.frame.height / 8 < 100) {
+            collectionView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        } else {
+            collectionView.heightAnchor.constraint(equalToConstant: view.frame.height).isActive = true
+        }
+        
+        
+    }
     @objc func showSpinningWheel(notification: Notification) {
 
         if let dataWeather = notification.userInfo?["key"] as? DataWeather {
