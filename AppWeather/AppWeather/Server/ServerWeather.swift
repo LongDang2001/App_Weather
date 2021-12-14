@@ -14,11 +14,23 @@ class ServerWeather {
     // location: Hanoi
     // lây giá trị hiện tại của thời tiết:
     
-    static let shared = ServerWeather()
     func requestDataServer(completion: @escaping (DataWeatherOneCity) -> Void, completionError: @escaping (Bool) -> Void, nameCity: String) {
         var checkIs: Bool = true
+        // check input nameCity truyền vào.
+        var containsWhitespace : Bool {
+            return(nameCity.rangeOfCharacter(from: .whitespaces) != nil)
+        }
+        
+        guard containsWhitespace == false else {
+            DispatchQueue.main.async {
+                checkIs = false
+                completionError(checkIs)
+            }
+            return
+        }
+        
+        
         guard let urlString = URL(string: "https://api.openweathermap.org/data/2.5/weather?q=\(nameCity),%7Bstate%20code%7D&appid=785da7dc006dda8f97cd5e89504ccb4c") else {
-            
             return
         }
         
@@ -31,17 +43,14 @@ class ServerWeather {
             }
             do {
                 let dataResuld = try JSONDecoder().decode(DataWeatherOneCity.self, from: dataresuld)
-                print(dataResuld)
                 DispatchQueue.main.async {
                     completion(dataResuld)
                 }
             } catch {
                 checkIs = false
                 DispatchQueue.main.async {
-                    print(checkIs)
                     completionError(checkIs)
                 }
-               print(error)
             }
         }
         task.resume()

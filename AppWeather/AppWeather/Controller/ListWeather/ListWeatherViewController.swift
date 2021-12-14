@@ -77,13 +77,7 @@ extension ListWeatherViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == 0) {
-            print(dataResuldSeven.count)
-            return dataResuldSeven.count
-            
-        }
-        print(dataResuldFive.count)
-        return dataResuldFive.count
+        section == 0 ? dataResuldSeven.count : dataResuldFive.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -120,29 +114,20 @@ extension ListWeatherViewController: UITableViewDataSource, UITableViewDelegate 
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
-        if (section == 0) {
-            let viewHeader = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
-            viewHeader.backgroundColor = UIColor.myviewBackground
-            let lbText = UILabel(frame: CGRect(x: viewHeader.frame.minX + 15, y: 10, width: tableView.frame.width/2, height: 30))
-            lbText.text = "Next Forecast"
-            lbText.textColor = UIColor.white
-            lbText.font = UIFont(name: "lato", size: 24)
-            viewHeader.addSubview(lbText)
-            return viewHeader
-        }
         let viewHeader = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 40))
         viewHeader.backgroundColor = UIColor.myviewBackground
         let lbText = UILabel(frame: CGRect(x: viewHeader.frame.minX + 15, y: 10, width: tableView.frame.width/2, height: 30))
-        lbText.text = "History Forecast"
-        lbText.textColor = UIColor.white
+        viewHeader.backgroundColor = UIColor.myviewBackground
         lbText.font = UIFont(name: "lato", size: 24)
+        lbText.textColor = UIColor.white
         viewHeader.addSubview(lbText)
+        section == 0 ? (lbText.text = "Next Forecast") : (lbText.text = "History Forecast")
         return viewHeader
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        var detailListView = DetailListViewController()
+        let detailListView = DetailListViewController()
         detailListView.modalPresentationStyle = .fullScreen
         detailListView.modalTransitionStyle = .coverVertical
         if(indexPath.section == 0) {

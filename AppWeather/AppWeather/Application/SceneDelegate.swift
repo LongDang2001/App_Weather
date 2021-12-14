@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UITabBarDelegate, UITab
         listWeatherVC.tabBarItem.imageInsets = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         let tabbarController = UITabBarController()
         tabbarController.delegate = self
-        tabbarController.tabBar.barTintColor = UIColor(rgb: 0xff101A39)
+        tabbarController.tabBar.barTintColor = UIColor(rgb: 0xff101A39)     
         tabbarController.tabBar.tintColor = UIColor.white
         tabbarController.tabBar.layer.cornerRadius = CGFloat(20)
         tabbarController.tabBar.clipsToBounds = true

@@ -22,7 +22,7 @@ class DateCurrent {
     }
     
     func convertTimeLongToDate(timeLong: Int) -> String {
-        var timeLongDouble: Double = Double(timeLong)
+        let timeLongDouble: Double = Double(timeLong)
         let date = Date(timeIntervalSince1970: TimeInterval(timeLongDouble))
         let dateFormatter = DateFormatter()
         dateFormatter.dateStyle = .short

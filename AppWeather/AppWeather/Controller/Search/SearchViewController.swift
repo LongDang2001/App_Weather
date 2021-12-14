@@ -23,11 +23,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
     @IBOutlet weak var lbWind: UILabel!
     @IBOutlet weak var viewContents: UIView!
     
+    @IBOutlet weak var stackViewLocal: UIStackView!
     
     @IBOutlet weak var btCancle: UIButton!
-    var textSearchChangle: String = ""
     var dataWeatherSearch: DataWeatherOneCity?
-    var requestWeather = ServerWeather.shared
+    var requestWeather = ServerWeather()
     override func viewDidLoad() {
         super.viewDidLoad()
         loadDataToSearch()
@@ -56,23 +56,21 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
             
         }, completionError: { checkIsOk in
             if (checkIsOk == false) {
-                let alert = UIAlertController(title: "Error: No Resuld \(self.textSearchChangle)", message: "You need write city no space", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Error: No Resuld \(self.txtSearch.text ?? " ")", message: "You need write city no space", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
                     if (action.style == .default) {
-                        // duyet qua ten cac thanh pho co trong danh sach:
                         
                     }
                 }))
                 
                 alert.addAction(UIAlertAction(title: "cancle", style: .cancel, handler: { action in
                     if (action.style == .cancel) {
-                        print("Cancle")
+                        
                     }
                 }))
                 self.present(alert, animated: true, completion: nil)
             }
-            self.textSearchChangle = ""
-        }, nameCity: textSearchChangle)
+        }, nameCity: txtSearch.text ?? " ")
         
         
         
@@ -85,8 +83,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
     }
     
     
-    func loadDataToSearch() {
+    private func loadDataToSearch() {
         view.backgroundColor = UIColor.myviewBackground
+        txtSearch.autocorrectionType = .no
         txtSearch.backgroundColor = UIColor.myGrayContent
         txtSearch.textColor = UIColor.white
         txtSearch.layer.cornerRadius = 20
@@ -96,10 +95,12 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UISearchTextF
         txtSearch.leftViewMode = .always
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        textSearchChangle = txtSearch.text! + string
-        print(textSearchChangle)
-        return true
+    private func cusomAutolayout() {
+        viewContents.addSubview(stackViewLocal)
+        stackViewLocal.spacing = viewContents.frame.height / 22
+        
+        
+        
     }
     
     

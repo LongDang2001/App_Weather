@@ -20,7 +20,7 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var lbWind: UILabel!
     @IBOutlet weak var btViewReport: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!
-    var serverLocation = ServerWeather.shared
+    var serverLocation = ServerWeather()
     var serverWeatherFiveDay = ServerWeatherFiveDay()
     var serverWeatherSevenDay = ServerWeatherSevenDay()
     var dataSevenDay: DataWeather?

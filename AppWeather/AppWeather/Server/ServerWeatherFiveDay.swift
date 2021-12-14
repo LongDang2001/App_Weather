@@ -25,10 +25,6 @@ class ServerWeatherFiveDay {
             guard let data = data else { return }
             do {
                 let dataResuld = try JSONDecoder().decode(DataWeather.self, from: data)
-                print(dataResuld)
-                //self.dataWeatherFiveDay = dataResuld
-                
-                //print(dataResuld.clouds.all)
                 DispatchQueue.main.async {
                     
                     completion(dataResuld)
